@@ -17,12 +17,12 @@ const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'amitadatabase',
+  database: 'amitaDatabase',
 });
 
 app.get('/get', (req, res) => {
   db.getConnection((err, con) => {
-    if (err) throw err;
+    if (err) throw err;s
     console.log(con.threadId);
     con.query('select * from dummy', (err, rows) => {
       con.release();
@@ -59,14 +59,15 @@ app.get('/getOrderList', (req, res) => {
 app.post('/insertOrder', (req, res) => {
   const userId = 'test1234';
   const date = req.body.date;
+  const hour = req.body.hour;
   const orderDate = new Date();
   const status = 'order';
   console.log(date);
   const sqlInsert =
-    'insert into orderlist (userID, date, OrderDate, status) values (?,?,?,?)';
+    'insert into orderlist (date, hour, status, orderDate, userID) values (?,?,?,?,?)';
   db.query(
     sqlInsert,
-    [userId, date, orderDate, status],
+    [date, hour, status, orderDate, userId],
     (err, result) => console.log('test', err)
   );
 });
@@ -74,10 +75,10 @@ app.post('/insertOrder', (req, res) => {
 app.post('/findDate', (req, res) => {
   const date = req.body.date;
   const find =
-    'select date from orderlist where date = ' + mysql.escape(date);
+    `select date, hour from orderlist where date = \'${date}\'`;
   db.query(find, (err, result) => {
-    if (!err && result?.length > 0) res.send('true');
-    else res.send('false');
+    if (!err) res.send(result);
+    else res.send([]);
   });
 });
 
