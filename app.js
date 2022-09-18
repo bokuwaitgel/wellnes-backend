@@ -22,14 +22,7 @@ const db = mysql.createPool({
 });
 
 app.get('/get', (req, res) => {
-  db.getConnection((err, con) => {
-    if (err) throw err;
-    con.query('select * from orderList', (err, rows) => {
-      con.release();
-      if (!err) res.send(rows);
-      else console.log(err);
-    });
-  });
+  res.send('hellp')
 });
 
 app.get('/getTimeRule', (req, res) => {
