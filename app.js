@@ -12,12 +12,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 app.use(cors());
-//mysql://b4fafb5eabeb25:d7e909c0@eu-cdbr-west-03.cleardb.net/heroku_ddea50f966d0764?reconnect=true
+//mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
+//mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
 const db = mysql.createConnection({
   host: 'eu-cdbr-west-03.cleardb.net',
-  user: 'b4fafb5eabeb25',
-  password: 'd7e909c0',
-  database: 'heroku_ddea50f966d0764',
+  user: 'b63eb6c7cbc057',
+  password: '80e6d349',
+  database: 'heroku_396c69ecedb014e',
 });
 
 app.get('/get', (req, res) => {
