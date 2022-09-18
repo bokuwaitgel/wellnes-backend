@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 4000;
-
+console.log(port)
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
