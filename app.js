@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 //mysql://b4fafb5eabeb25:d7e909c0@eu-cdbr-west-03.cleardb.net/heroku_ddea50f966d0764?reconnect=true
-const db = mysql.createPool({
+const db = mysql.createConnection({
   host: 'heroku_ddea50f966d0764',
   user: 'b4fafb5eabeb25',
   password: 'd7e909c0',
@@ -27,7 +27,7 @@ app.get('/get', (req, res) => {
 app.get('/getTimeRule', (req, res) => {
   db.getConnection((err, con) => {
     if (err) throw err;
-    con.query('select * from heroku_ddea50f966d0764.timerule;', (err, rows) => {
+    con.query('select * from timerule;', (err, rows) => {
       con.release();
       if (!err) res.send(rows);
       else console.log(err);
