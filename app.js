@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 //mysql://b4fafb5eabeb25:d7e909c0@eu-cdbr-west-03.cleardb.net/heroku_ddea50f966d0764?reconnect=true
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: 'heroku_ddea50f966d0764',
   user: 'b4fafb5eabeb25',
   password: 'd7e909c0',
