@@ -21,7 +21,10 @@ const db = mysql.createConnection({
 });
 
 app.get('/get', (req, res) => {
-  res.send('hellp')
+  con.connect(function(err) {
+    if (err) throw err;
+    res.send("Connected!");
+  });
 });
 
 app.get('/getTimeRule', (req, res) => {
