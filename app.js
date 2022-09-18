@@ -27,7 +27,7 @@ app.get('/get', (req, res) => {
 app.get('/getTimeRule', (req, res) => {
   db.getConnection((err, con) => {
     if (err) throw err;
-    con.query('select * from timerule;', (err, rows) => {
+    con.query('select * from heroku_ddea50f966d0764.timerule;', (err, rows) => {
       con.release();
       if (!err) res.send(rows);
       else console.log(err);
