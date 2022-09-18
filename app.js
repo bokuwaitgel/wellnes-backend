@@ -14,10 +14,10 @@ app.use(bodyParser.json());
 app.use(cors());
 //mysql://b4fafb5eabeb25:d7e909c0@eu-cdbr-west-03.cleardb.net/heroku_ddea50f966d0764?reconnect=true
 const db = mysql.createConnection({
-  host: 'heroku_ddea50f966d0764',
+  host: 'eu-cdbr-west-03.cleardb.net',
   user: 'b4fafb5eabeb25',
   password: 'd7e909c0',
-  database: 'eu-cdbr-west-03.cleardb.net',
+  database: 'heroku_ddea50f966d0764',
 });
 
 app.get('/get', (req, res) => {
