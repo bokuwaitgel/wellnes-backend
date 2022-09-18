@@ -13,8 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 //mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
-//mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: 'eu-cdbr-west-03.cleardb.net',
   user: 'b63eb6c7cbc057',
   password: '80e6d349',
