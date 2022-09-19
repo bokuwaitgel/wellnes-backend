@@ -2,7 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
-const google = require('googleapis');
+
+const {google} = require('googleapis');
+const GOOGLE_CLIENT_ID = '895950892526-teg3cd13d40nvlrigl71l89cjo79nep5.apps.googleusercontent.com'
+const GOOGLE_CLIENT_SECRED = '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'
+const REFRESH_TOKEN = '1//04SUbdzAjPsEyCgYIARAAGAQSNwF-L9Ir12m4kMqcKuJC3efVeqx_qCBzcf7qpRaxN9i8sl91Zqa85KK9xhl1w6Bv-WpJqfr-GqI'
+const oauth2Client = new google.auth.OAuth2(
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRED,
+  'http://localhost:4000'
+)
+
+oauth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+const calendar = google.calendar('v3')
 
 require('dotenv').config();
 
@@ -12,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 app.use(cors());
+
 //mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
 const db = mysql.createPool({
   host: 'eu-cdbr-west-03.cleardb.net',
@@ -67,6 +80,7 @@ app.post('/insertOrder', (req, res) => {
     }
   );
 });
+
 app.post('/insertUser', (req, res) => {
   const userId = req.body.userID;
   const firstname = req.body.firstname;
@@ -94,6 +108,7 @@ app.post('/findDate', (req, res) => {
     else res.send([]);
   });
 });
+
 app.post('/findUser', (req, res) => {
   const userID = req.body.userID;
   const find =
@@ -158,6 +173,58 @@ app.post('/updatePaymentId', (req, res) => {
     else res.send(err);
   });
 });
+
+app.get('/addGoogleCalender', async (req, res, next) => {
+  const eventStartTime = req.body.start;
+  const eventEndTime = req.body.end;
+  const summary = req.body.summary;
+  const description = req.body.description;
+  try{
+    oauth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
+    const calendar = google.calendar('v3')
+    const response = await calendar.events.insert({
+      auth: oauth2Client,
+      calendarId: '79f8lo5gvkf3v9faod96l8ar48@group.calendar.google.com',
+      requestBody: {
+        summary: summary,
+        description: description,
+        colorId: 7,
+        start: {
+          dateTime: eventStartTime,
+        },
+        end: {
+          dateTime: eventEndTime,
+        }
+      }
+    })
+    console.log(response.data)
+    res.send(response)
+  }catch(error){
+    next(error)
+  }
+})
+
+const eventStartTime1 = new Date()
+eventStartTime1.setDate(eventStartTime1.getDate() - 1)
+const eventEndTime1 = new Date()
+eventEndTime1.setDate(eventEndTime1.getDate() + 1)
+console.log(eventStartTime1,eventEndTime1)
+app.get('/testGoogleV2', async (req,res,next) => {
+  try{
+    const response = await calendar.events.list({
+      auth: oauth2Client,
+      calendarId: '79f8lo5gvkf3v9faod96l8ar48@group.calendar.google.com',
+      timeMin: (eventStartTime1),
+      timeMax: (eventEndTime1),
+    })
+    const items = response['data']['items']
+    res.send(items)
+    console.log(items)
+  }catch(error){
+    next(error)
+  }
+})
+
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
