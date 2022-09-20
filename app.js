@@ -114,7 +114,7 @@ app.post('/findDate', (req, res) => {
 app.post('/findUser', (req, res) => {
   const userID = req.body.userID;
   const find =
-    `select firstname, lastname, phone, gmail, userID  from orderlist where userID = \'${userID}\'`;
+    `select firstname, lastname, phone, gmail, userID  from userlist where userID = \'${userID}\'`;
   db.query(find, (err, result) => {
     if (!err) res.send(result);
     else res.send([]);
