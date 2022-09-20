@@ -199,7 +199,6 @@ app.post('/addGoogleCalender', async (req, res, next) => {
         }
       }
     })
-    console.log(response.data)
     res.send(response)
   }catch(error){
     next(error)
@@ -218,7 +217,6 @@ app.post('/getGoogleTime', async (req,res,next) => {
     })
     const items = response['data']['items']
     res.send(items)
-    console.log(items)
   }catch(error){
     next(error)
   }
