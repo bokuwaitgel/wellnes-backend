@@ -7,6 +7,8 @@ const {google} = require('googleapis');
 const GOOGLE_CLIENT_ID = '895950892526-teg3cd13d40nvlrigl71l89cjo79nep5.apps.googleusercontent.com'
 const GOOGLE_CLIENT_SECRED = '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'
 const REFRESH_TOKEN = '1//04SUbdzAjPsEyCgYIARAAGAQSNwF-L9Ir12m4kMqcKuJC3efVeqx_qCBzcf7qpRaxN9i8sl91Zqa85KK9xhl1w6Bv-WpJqfr-GqI'
+const calendarID = 'e0ae2d8eec5705fb51d423292b9db0a6e56fb8eeb6d5be17430f090ca70011ab@group.calendar.google.com'
+
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRED,
@@ -184,7 +186,7 @@ app.post('/addGoogleCalender', async (req, res, next) => {
     const calendar = google.calendar('v3')
     const response = await calendar.events.insert({
       auth: oauth2Client,
-      calendarId: '79f8lo5gvkf3v9faod96l8ar48@group.calendar.google.com',
+      calendarId: calendarID,
       requestBody: {
         summary: summary,
         description: description,
@@ -210,7 +212,7 @@ app.post('/getGoogleTime', async (req,res,next) => {
   try{
     const response = await calendar.events.list({
       auth: oauth2Client,
-      calendarId: '79f8lo5gvkf3v9faod96l8ar48@group.calendar.google.com',
+      calendarId: calendarID,
       timeMin: (eventStartTime),
       timeMax: (eventEndTime),
     })
