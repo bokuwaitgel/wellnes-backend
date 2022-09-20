@@ -204,18 +204,15 @@ app.post('/addGoogleCalender', async (req, res, next) => {
   }
 })
 
-const eventStartTime1 = new Date()
-eventStartTime1.setDate(eventStartTime1.getDate() - 1)
-const eventEndTime1 = new Date()
-eventEndTime1.setDate(eventEndTime1.getDate() + 1)
-console.log(eventStartTime1,eventEndTime1)
-app.get('/testGoogleV2', async (req,res,next) => {
+app.post('/getGoogleTime', async (req,res,next) => {
+  const eventStartTime = req.body.start;
+  const eventEndTime = req.body.end;
   try{
     const response = await calendar.events.list({
       auth: oauth2Client,
       calendarId: '79f8lo5gvkf3v9faod96l8ar48@group.calendar.google.com',
-      timeMin: (eventStartTime1),
-      timeMax: (eventEndTime1),
+      timeMin: (eventStartTime),
+      timeMax: (eventEndTime),
     })
     const items = response['data']['items']
     res.send(items)
