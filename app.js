@@ -174,7 +174,7 @@ app.post('/updatePaymentId', (req, res) => {
   });
 });
 
-app.get('/addGoogleCalender', async (req, res, next) => {
+app.post('/addGoogleCalender', async (req, res, next) => {
   const eventStartTime = req.body.start;
   const eventEndTime = req.body.end;
   const summary = req.body.summary;
