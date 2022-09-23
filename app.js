@@ -158,7 +158,7 @@ app.post('/updateEventID', (req, res) => {
   const id = req.body.id;
   const checkoutId = req.body.checkoutId;
   const find =
-    `update orderlist set eventId=\'${id}\' where checkoutId = \'${checkoutId}\'`;
+    `update orderlist set eventID=\'${id}\' where checkoutId = \'${checkoutId}\'`;
   db.query(find, (err, result) => {
     if (!err) res.send(result);
     else res.send([]);
