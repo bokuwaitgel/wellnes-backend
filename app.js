@@ -124,7 +124,7 @@ app.post('/findUser', (req, res) => {
 app.post('/getOrderUser', (req, res) => {
   const userId = req.body.userID;
   const find =
-    `select orderID, date, hour, checkoutId, paid, eventID from orderlist where userID = \'${userId}\' order by date and orderID;`
+    `select orderID, date, hour, checkoutId, paid, eventID, startTime, endTime from orderlist where userID = \'${userId}\' order by date and orderID;`
   db.query(find, (err, result) => {
     if (!err){
       res.send(result);
@@ -156,9 +156,11 @@ app.post('/updatePayment', (req, res) => {
 
 app.post('/updateEventID', (req, res) => {
   const id = req.body.id;
+  const eventStartTime = req.body.start;
+  const eventEndTime = req.body.end;
   const checkoutId = req.body.checkoutId;
   const find =
-    `update orderlist set eventID=\'${id}\' where checkoutId = \'${checkoutId}\'`;
+    `update orderlist set eventID=\'${id}\', startTime=\'${eventStartTime}\', endTime=\'${eventEndTime}\' where checkoutId = \'${checkoutId}\'`;
   db.query(find, (err, result) => {
     if (!err) res.send(result);
     else res.send([]);
