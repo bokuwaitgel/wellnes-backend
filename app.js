@@ -232,8 +232,9 @@ app.post('/getGoogleTime', async (req,res,next) => {
     next(error)
   }
 })
-app.post('/updateEvent', async (req,res,next) => {
-  const id = req.body.id
+app.get('/updateEvent', async (req,res,next) => {
+  //const id = req.body.id
+  const id = 'e4e4h4sqi1p46h90ej7l9h4vfs'
   try{
     const response = await calendar.events.update({
       auth: oauth2Client,
@@ -243,7 +244,7 @@ app.post('/updateEvent', async (req,res,next) => {
         colorId: 2
       }
     })
-    res.send(items)
+    res.send(response)
   }catch(error){
     next(error)
   }
