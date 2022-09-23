@@ -222,6 +222,7 @@ app.post('/getGoogleTime', async (req,res,next) => {
   const eventStartTime = req.body.start;
   const eventEndTime = req.body.end;
   try{
+    oauth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
     const response = await calendar.events.list({
       auth: oauth2Client,
       calendarId: calendarID,
