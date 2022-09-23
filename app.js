@@ -124,7 +124,7 @@ app.post('/findUser', (req, res) => {
 app.post('/getOrderUser', (req, res) => {
   const userId = req.body.userID;
   const find =
-    `select orderID, date, hour, checkoutId, paid from orderlist where userID = \'${userId}\' order by date and orderID;`
+    `select orderID, date, hour, checkoutId, paid, eventID from orderlist where userID = \'${userId}\' order by date and orderID;`
   db.query(find, (err, result) => {
     if (!err){
       res.send(result);
