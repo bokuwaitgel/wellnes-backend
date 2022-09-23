@@ -234,12 +234,12 @@ app.post('/getGoogleTime', async (req,res,next) => {
     next(error)
   }
 })
-app.post('/updateEvent', async (req,res,next) => {
-  const id = req.body.id
-  const eventStartTime = req.body.start;
-  const eventEndTime = req.body.end;
-  const summary = req.body.summary;
-  const description = req.body.description;
+app.get('/updateEvent', async (req,res,next) => {
+  const id = "dpj66sklsd9kp6k0dqb6p3ln4o"//req.body.id
+  const eventStartTime = '2022-09-24 09:00:00'//req.body.start;
+  const eventEndTime = '2022-09-24 09:30:00'//req.body.end;
+  const summary = 'Түвшинболд'//req.body.summary;
+  const description = 'phone: 86116451 \ngmail: imozis22@gmail.com \nPaid'//req.body.description;
   // const id = 'e4e4h4sqi1p46h90ej7l9h4vfs'
   try{
     const response = await calendar.events.update({
