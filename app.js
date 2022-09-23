@@ -235,27 +235,47 @@ app.post('/getGoogleTime', async (req,res,next) => {
     next(error)
   }
 })
-app.get('/updateEvent', async (req,res,next) => {
-  const id = "dpj66sklsd9kp6k0dqb6p3ln4o"//req.body.id
-  const eventStartTime = '2022-09-24 09:00:00'//req.body.start;
-  const eventEndTime = '2022-09-24 09:30:00'//req.body.end;
-  const summary = 'Түвшинболд'//req.body.summary;
-  const description = 'phone: 86116451 \ngmail: imozis22@gmail.com \nPaid'//req.body.description;
+
+
+app.post('/updateEvent', async (req,res,next) => {
+  const id = req.body.id
+  const eventStart = req.body.start;
+  const eventEnd = req.body.end;
+  const summary = req.body.summary;
+  const description = req.body.description;
   // const id = 'e4e4h4sqi1p46h90ej7l9h4vfs'
+  const st = (eventStart).split(' ');
+  const ed = (eventEnd).split(' ');
+  const day = new Date()
+  const yearS = st[0]
+  const yearE = ed[0]
+  const startH=st[1]
+  const endH=ed[1]
+  const hm = startH.split(':');
+  const dl = endH.split(':');
+  const yhm =yearS.split('-');
+  const ydl = yearE.split('-');
+  const start = new Date(parseInt(yhm[0]), parseInt(yhm[1])-1, parseInt(yhm[2]));
+  const end = new Date(parseInt(ydl[0]), parseInt(ydl[1])-1, parseInt(ydl[2]));
+  start.setHours(parseInt(hm[0]));
+  end.setHours(parseInt(hm[0]));
+  start.setMinutes(parseInt(hm[1]));
+  end.setMinutes(parseInt(dl[1]) + parseInt(hm[1]));
+
   try{
     const response = await calendar.events.update({
       auth: oauth2Client,
       calendarId: calendarID,
-      eventId: id,
-      resource: {
+      eventId:id,
+      requestBody: {
         summary: summary,
         description: description,
         colorId: 2,
         start: {
-          dateTime: eventStartTime,
+          dateTime: start,
         },
         end: {
-          dateTime: eventEndTime,
+          dateTime: end,
         }
       }
     })
