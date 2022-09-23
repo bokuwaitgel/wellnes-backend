@@ -234,16 +234,28 @@ app.post('/getGoogleTime', async (req,res,next) => {
     next(error)
   }
 })
-app.get('/updateEvent', async (req,res,next) => {
-  //const id = req.body.id
-  const id = 'e4e4h4sqi1p46h90ej7l9h4vfs'
+app.post('/updateEvent', async (req,res,next) => {
+  const id = req.body.id
+  const eventStartTime = req.body.start;
+  const eventEndTime = req.body.end;
+  const summary = req.body.summary;
+  const description = req.body.description;
+  // const id = 'e4e4h4sqi1p46h90ej7l9h4vfs'
   try{
     const response = await calendar.events.update({
       auth: oauth2Client,
       calendarId: calendarID,
       eventId: id,
       resource: {
-        colorId: 2
+        summary: summary,
+        description: description,
+        colorId: 2,
+        start: {
+          dateTime: eventStartTime,
+        },
+        end: {
+          dateTime: eventEndTime,
+        }
       }
     })
     res.send(response)
