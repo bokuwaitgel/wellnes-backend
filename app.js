@@ -221,7 +221,22 @@ app.post('/getGoogleTime', async (req,res,next) => {
     next(error)
   }
 })
-
+app.post('/updateEvent', async (req,res,next) => {
+  const id = req.body.id
+  try{
+    const response = await calendar.events.update({
+      auth: oauth2Client,
+      calendarId: calendarID,
+      eventId: id,
+      resource: {
+        colorId: 2
+      }
+    })
+    res.send(items)
+  }catch(error){
+    next(error)
+  }
+})
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
