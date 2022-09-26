@@ -243,22 +243,8 @@ app.post('/updateEvent', async (req,res,next) => {
   const eventEnd = req.body.end;
   const summary = req.body.summary;
   const description = req.body.description;
-  const st = eventStart?.split(' ') || [[],[]];
-  const ed = eventEnd?.split(' ') || [[],[]];
-  const yearS = st[0] || []
-  const yearE = ed[0] || []
-  const startH= st[1] || []
-  const endH= ed[1] || []
-  const hm = startH.split(':');
-  const dl = endH.split(':');
-  const yhm =yearS.split('-');
-  const ydl = yearE.split('-');
-  const start = new Date(parseInt(yhm[0]), parseInt(yhm[1])-1, parseInt(yhm[2]));
-  const end = new Date(parseInt(ydl[0]), parseInt(ydl[1])-1, parseInt(ydl[2]));
-  start.setHours(parseInt(hm[0]));
-  end.setHours(parseInt(hm[0]));
-  start.setMinutes(parseInt(hm[1]));
-  end.setMinutes(parseInt(dl[1]) + parseInt(hm[1]));
+  const start = Date(eventStart);
+  const end = Date(eventEnd);
 
   try{
     const response = await calendar.events.update({
