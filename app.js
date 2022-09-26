@@ -12,7 +12,7 @@ const calendarID = 'e0ae2d8eec5705fb51d423292b9db0a6e56fb8eeb6d5be17430f090ca700
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRED,
-  'http://localhost:4000'
+  'localhost:4000'
 )
 
 oauth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
@@ -243,10 +243,8 @@ app.post('/updateEvent', async (req,res,next) => {
   const eventEnd = req.body.end;
   const summary = req.body.summary;
   const description = req.body.description;
-  // const id = 'e4e4h4sqi1p46h90ej7l9h4vfs'
-  const st = (eventStart).split(' ');
-  const ed = (eventEnd).split(' ');
-  const day = new Date()
+  const st = eventStart.split(' ');
+  const ed = eventEnd.split(' ');
   const yearS = st[0]
   const yearE = ed[0]
   const startH=st[1]
