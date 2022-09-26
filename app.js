@@ -206,9 +206,11 @@ app.post('/addGoogleCalender', async (req, res, next) => {
         colorId: 7,
         start: {
           dateTime: eventStartTime,
+          timeZone: 'Asia/Ulaanbaatar',
         },
         end: {
           dateTime: eventEndTime,
+          timeZone: 'Asia/Ulaanbaatar',
         }
       }
     })
