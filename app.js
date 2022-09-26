@@ -21,7 +21,14 @@ const calendar = google.calendar('v3')
 require('dotenv').config();
 
 const app = express();
+app.use( express.json() );
+
+
 const port = process.env.PORT || 4000;
+app.post( '/webhook', ( req, res ) => {
+  console.log( 'received webhook', req.body );
+  res.sendStatus( 200 );
+} );
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
