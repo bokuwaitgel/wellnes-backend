@@ -12,7 +12,7 @@ const calendarID = 'e0ae2d8eec5705fb51d423292b9db0a6e56fb8eeb6d5be17430f090ca700
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRED,
-  'localhost:4000'
+  'https://amita-backend.herokuapp.com/'
 )
 
 oauth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
