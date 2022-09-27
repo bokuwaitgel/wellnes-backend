@@ -126,7 +126,7 @@ app.post('/getOrderUser', (req, res) => {
 app.post('/getUserID', (req,res)=>{
   const checkoutId = req.body.checkoutId;
   const find =
-    `select userID from orderlist  where checkoutId = \'${checkoutId}\'`;
+    `select userID, day, hour from orderlist  where checkoutId = \'${checkoutId}\'`;
   db.query(find, (err, result) => {
     if (!err) res.send(result);
     else res.send([]);
