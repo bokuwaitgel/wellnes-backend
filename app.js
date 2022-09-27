@@ -42,13 +42,6 @@ const db = mysql.createPool({
   database: 'heroku_396c69ecedb014e',
 });
 
-app.get('/get', (req, res) => {
-  con.connect(function(err) {
-    if (err) throw err;
-    res.send("Connected!");
-  });
-});
-
 app.get('/getTimeRule', (req, res) => {
   db.getConnection((err, con) => {
     if (err) throw err;
@@ -108,16 +101,6 @@ app.post('/insertUser', (req, res) => {
   );
 });
 
-app.post('/findDate', (req, res) => {
-  const date = req.body.date;
-  const find =
-    `select date, hour from orderlist where date = \'${date}\'`;
-  db.query(find, (err, result) => {
-    if (!err) res.send(result);
-    else res.send([]);
-  });
-});
-
 app.post('/findUser', (req, res) => {
   const userID = req.body.userID;
   const find =
@@ -140,21 +123,20 @@ app.post('/getOrderUser', (req, res) => {
   });
 });
 
-app.post('/cancel', (req, res) => {
-  const date = req.body.date;
-  const hour = req.body.hour;
+app.post('/getUserID', (req,res)=>{
+  const checkoutId = req.body.checkoutId;
   const find =
-    `delete from orderlist where date = \'${date}\' and hour = \'${hour}\'`;
+    `select userID from orderlist  where checkoutId = \'${checkoutId}\'`;
   db.query(find, (err, result) => {
     if (!err) res.send(result);
     else res.send([]);
   });
-});
+})
 
 app.post('/updatePayment', (req, res) => {
-  const orderId = req.body.checkoutId;
+  const checkoutId = req.body.checkoutId;
   const find =
-    `update orderlist set paid=\'${1}\' where checkoutId = \'${checkoutId}\'`;
+    `update orderlist set paid=\'paid\' where checkoutId = \'${checkoutId}\'`;
   db.query(find, (err, result) => {
     if (!err) res.send(result);
     else res.send([]);
@@ -195,6 +177,8 @@ app.post('/updatePaymentId', (req, res) => {
     else res.send(err);
   });
 });
+
+//google calendar
 
 app.post('/addGoogleCalender', async (req, res, next) => {
   const eventStartTime = req.body.start;
@@ -245,35 +229,6 @@ app.post('/getGoogleTime', async (req,res,next) => {
   }
 })
 
-
-app.post('/updateEvent', async (req,res,next) => {
-  const id = req.body.id
-  const start = req.body.start;
-  const end = req.body.end;
-  const summary = req.body.summary;
-  const description = req.body.description;
-  try{
-    const response = await calendar.events.update({
-      auth: oauth2Client,
-      calendarId: calendarID,
-      eventId:id,
-      requestBody: {
-        summary: summary,
-        description: description,
-        colorId: 2,
-        start: {
-          dateTime: start,
-        },
-        end: {
-          dateTime: end,
-        }
-      }
-    })
-    //res.send(response)
-  }catch(error){
-    next(error)
-  }
-})
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
