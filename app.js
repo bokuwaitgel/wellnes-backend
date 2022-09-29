@@ -8,11 +8,14 @@ const GOOGLE_CLIENT_ID = '895950892526-teg3cd13d40nvlrigl71l89cjo79nep5.apps.goo
 const GOOGLE_CLIENT_SECRED = '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'
 const REFRESH_TOKEN = '1//04MY8qTCvufKPCgYIARAAGAQSNwF-L9Ir5so47bXjOgPSwlR6k7Urdd-Pp0Tu-JW77dkRUjONqscMAnYwgIOC8sJ9aNG0il_GIJg'
 const calendarID = 'e0ae2d8eec5705fb51d423292b9db0a6e56fb8eeb6d5be17430f090ca70011ab@group.calendar.google.com'
+//378382094535-nkiagmh7esjcuidclb7625lur4d2b2uc.apps.googleusercontent.com  -> client id
+//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  -> client secret
+
 
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRED,
-  'https://amita-backend.herokuapp.com/'
+  'https://amita-test-backend.herokuapp.com/'
 )
 
 oauth2Client.setCredentials({refresh_token:REFRESH_TOKEN})
@@ -35,11 +38,13 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
+
+//mysql://b2e6df09802738:0620535e@eu-cdbr-west-03.cleardb.net/heroku_7d523e0ac62028f?reconnect=true ->test
 const db = mysql.createPool({
   host: 'eu-cdbr-west-03.cleardb.net',
-  user: 'b63eb6c7cbc057',
-  password: '80e6d349',
-  database: 'heroku_396c69ecedb014e',
+  user: 'b2e6df09802738',
+  password: '0620535e',
+  database: 'heroku_7d523e0ac62028f',
 });
 
 app.get('/getTimeRule', (req, res) => {
