@@ -37,6 +37,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+//DNS -> whispering-cove-ea3bvuruapl278e28a8tq6qm.herokudns.com
+
 //mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
 const db = mysql.createPool({
   host: 'eu-cdbr-west-03.cleardb.net',
