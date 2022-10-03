@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
+const axios = require('axios');
 
 const {google} = require('googleapis');
 const GOOGLE_CLIENT_ID = '895950892526-teg3cd13d40nvlrigl71l89cjo79nep5.apps.googleusercontent.com'
@@ -10,7 +11,6 @@ const REFRESH_TOKEN = '1//04MY8qTCvufKPCgYIARAAGAQSNwF-L9Ir5so47bXjOgPSwlR6k7Urd
 const calendarID = 'e0ae2d8eec5705fb51d423292b9db0a6e56fb8eeb6d5be17430f090ca70011ab@group.calendar.google.com'
 //378382094535-nkiagmh7esjcuidclb7625lur4d2b2uc.apps.googleusercontent.com  -> client id
 //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  -> client secret
-
 
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
@@ -36,6 +36,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 app.use(cors());
+
+//DNS -> whispering-cove-ea3bvuruapl278e28a8tq6qm.herokudns.com
 
 //mysql://b63eb6c7cbc057:80e6d349@eu-cdbr-west-03.cleardb.net/heroku_396c69ecedb014e?reconnect=true
 
@@ -233,7 +235,62 @@ app.post('/getGoogleTime', async (req,res,next) => {
     next(error)
   }
 })
+const stsBase = 'https://test.hipay.mn';
+// const client_secret = '5hPR4fs9g2Wq5ZAXWI0L2L';
+// const client_id = 'amitawlc';
+const client_secret = 'Trk4UNHt58LqDwRL4adsXV'
+const client_id = 'amita001';
+const bearer = 'Bearer ' + client_secret;
 
+
+app.post('/getToken', async (req,res,next) => {
+  const code = req.body.code;
+  console.log(code)
+  data = {
+    client_id: client_id,
+    client_secret: client_secret,
+    redirect_uri: 'https://amita-test-backend.herokuapp.com/webhook',
+    code: code,
+    grant_type: 'authorization_code'
+  }
+  const response = await axios.post(stsBase+'/v2/auth/token', data)
+  const result = response.data;
+  console.log(result);
+  res.send(result);
+})
+
+app.post('/getUserInfo', async (req,res,next) => {
+  const token = req.body.token;
+  //const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBOUJENzBCMDc5OEE3NUY3RTA1MzJBNjRBOEMwOUIzQiIsImlzcyI6ImFtaXRhMDAxIiwicmZ0IjoiRUExOEZDOTMxMzgzMjEyQUUwNTMyQTY1QThDMEJDMDkiLCJleHAiOjE2NjQ3Njc5NTl9._iW8eXb9VDXzxARQaY6ple8chHOgrg1agBIScyj9t08';
+  const bearer1 = 'Bearer ' + token;
+  const response = await axios.get(stsBase+'/v2/user/info',
+    {
+      headers: {
+        Authorization: bearer1
+      }
+    })
+  const result = response.data;
+  console.log(result);
+  res.send(result);
+})
+
+app.get('/checkout', async (req,res,next) => {
+  //const code = req.body.code;
+  const response = await axios.post(stsBase+'/checkout',{
+    entityId: client_id,
+    amount: '5000',
+    currency: 'MNT',
+    redirect_uri: 'https://amita-test-front.herokuapp.com/access'
+  },
+  {
+    headers: {
+      Authorization: bearer
+    }
+  })
+  const result = response.data;
+  console.log(result);
+  res.send(result);
+})
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
