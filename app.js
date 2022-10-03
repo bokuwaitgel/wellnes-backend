@@ -200,7 +200,7 @@ app.post('/addGoogleCalender', async (req, res, next) => {
       requestBody: {
         summary: summary,
         description: description,
-        colorId: 4,
+        colorId: 3,
         start: {
           dateTime: eventStartTime,
           timeZone: 'Asia/Ulaanbaatar',
