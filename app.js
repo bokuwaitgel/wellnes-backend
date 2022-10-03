@@ -234,11 +234,11 @@ app.post('/getGoogleTime', async (req,res,next) => {
     next(error)
   }
 })
-const stsBase = 'https://test.hipay.mn';
-// const client_secret = '5hPR4fs9g2Wq5ZAXWI0L2L';
-// const client_id = 'amitawlc';
-const client_secret = 'Trk4UNHt58LqDwRL4adsXV'
-const client_id = 'amita001';
+const stsBase = 'https://sts.hipay.mn';
+const client_secret = '5hPR4fs9g2Wq5ZAXWI0L2L';
+const client_id = 'amitawlc';
+// const client_secret = 'Trk4UNHt58LqDwRL4adsXV'
+// const client_id = 'amita001';
 const bearer = 'Bearer ' + client_secret;
 
 
