@@ -277,7 +277,7 @@ app.get('/checkout', async (req,res,next) => {
   //const code = req.body.code;
   const response = await axios.post(stsBase+'/checkout',{
     entityId: client_id,
-    amount: '5000',
+    amount: '1',
     currency: 'MNT',
     redirect_uri: 'https://amita-front.herokuapp.com/access'
   },
