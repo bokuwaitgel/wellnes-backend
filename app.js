@@ -273,7 +273,7 @@ app.post('/getUserInfo', async (req,res,next) => {
   res.send(result);
 })
 
-app.get('/checkout', async (req,res,next) => {
+app.post('/checkout', async (req,res,next) => {
   const name = req.body.name;
   const response = await axios.post(stsBase+'/checkout',{
     entityId: client_id,
