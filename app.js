@@ -283,8 +283,8 @@ app.post('/checkout', async (req,res,next) => {
     item: [
       {
           "name": name,
-      },
-  },
+      }]
+    },
   {
     headers: {
       Authorization: bearer
