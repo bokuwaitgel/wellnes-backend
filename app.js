@@ -292,5 +292,14 @@ app.get('/checkout', async (req,res,next) => {
   res.send(result);
 })
 
-
+app.get('/getClass', (req, res) => {
+  db.getConnection((err, con) => {
+    if (err) throw err;
+    con.query('select * from class;', (err, rows) => {
+      con.release();
+      if (!err) res.send(rows);
+      else res.send(err);
+    });
+  });
+});
 app.listen(port, () => console.log(`Listening on port ${port}`));
